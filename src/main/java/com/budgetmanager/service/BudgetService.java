@@ -18,7 +18,7 @@ public class BudgetService {
         this.budgetRepository = budgetRepository;
     }
 
-    public Optional<Budget> getBudgetforMonth(YearMonth month) {
+    public Optional<Budget> getBudgetForMonth(YearMonth month) {
         return budgetRepository.findByMonth(month);
     }
 }
