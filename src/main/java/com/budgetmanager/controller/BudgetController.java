@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.YearMonth;
 import java.util.Optional;
 
+/**
+ * REST API Controller for managing monthly budgets.
+ */
 @RestController
 @RequestMapping(path = "/api/budgets")
 public class BudgetController {
@@ -23,6 +26,13 @@ public class BudgetController {
         this.budgetService = budgetService;
     }
 
+    /**
+     * Retrieves the budget for a given month and year.
+     *
+     * @param year  The year of the budget.
+     * @param month The month of the budget.
+     * @return The budget details for the specified period.
+     */
     @GetMapping("/{year}/{month}")
     public ResponseEntity<Budget> getBudget(@PathVariable int year, @PathVariable int month) {
         YearMonth yearMonth = YearMonth.of(year, month);

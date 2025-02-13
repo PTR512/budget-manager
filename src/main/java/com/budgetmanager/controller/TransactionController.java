@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST API Controller for managing financial transactions.
+ */
 @RestController
 @RequestMapping(path = "/api/transactions")
 public class TransactionController {
@@ -19,11 +22,22 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    /**
+     * Retrieves all transactions.
+     *
+     * @return List of all transactions.
+     */
     @GetMapping
     public List<Transaction> getTransactions() {
         return transactionService.getAllTransactions();
     }
 
+    /**
+     * Adds a new transaction to the database.
+     *
+     * @param transaction Transaction to be added.
+     * @return The created transaction.
+     */
     @PostMapping
     public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
         return ResponseEntity.ok(transactionService.addTransaction(transaction));
