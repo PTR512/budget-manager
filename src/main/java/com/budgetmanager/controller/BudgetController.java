@@ -4,10 +4,7 @@ import com.budgetmanager.model.Budget;
 import com.budgetmanager.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
 import java.util.Optional;
@@ -38,5 +35,16 @@ public class BudgetController {
         YearMonth yearMonth = YearMonth.of(year, month);
         Optional<Budget> budget = budgetService.getBudgetForMonth(yearMonth);
         return budget.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Adds a new budget to the database.
+     *
+     * @param budget Budget to be added.
+     * @return The created budget.
+     */
+    @PostMapping()
+    public ResponseEntity<Budget> addBudget(@RequestBody Budget budget) {
+        return ResponseEntity.ok(budgetService.addBudget(budget));
     }
 }

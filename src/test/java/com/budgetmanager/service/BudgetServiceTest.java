@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -48,5 +49,19 @@ class BudgetServiceTest {
         // Then
         assertTrue(result.isPresent());
         verify(budgetRepository, times(1)).findByMonth(month);
+    }
+
+    @Test
+    void addBudget_ShouldSaveAndReturnBudget() {
+        // Given
+        Budget budget = new Budget(null, YearMonth.of(2024, 2), BigDecimal.valueOf(5000), BigDecimal.valueOf(2000));
+        when(budgetRepository.save(budget)).thenReturn(budget);
+
+        // When
+        Budget savedBudget = budgetService.addBudget(budget);
+
+        // Then
+        assertEquals(BigDecimal.valueOf(5000), savedBudget.getLimitAmount());
+        verify(budgetRepository, times(1)).save(budget);
     }
 }

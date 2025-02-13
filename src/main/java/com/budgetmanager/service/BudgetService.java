@@ -21,4 +21,8 @@ public class BudgetService {
     public Optional<Budget> getBudgetForMonth(YearMonth month) {
         return budgetRepository.findByMonth(month);
     }
+
+    public Budget addBudget(Budget budget) {
+        return budgetRepository.save(budget);
+    }
 }
