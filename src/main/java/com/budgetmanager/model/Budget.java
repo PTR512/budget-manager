@@ -1,6 +1,9 @@
 package com.budgetmanager.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
@@ -12,8 +15,15 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotNull(message = "Month is required")
     private YearMonth month;
+
+    @NotNull(message = "Limit amount is required")
+    @DecimalMin(value = "0.0", message = "Limit amount must be greater than or equal to 0")
     private BigDecimal limitAmount;
+
+    @NotNull(message = "Current expenses is required")
+    @DecimalMin(value = "0.0", message = "Current expenses must be greater than or equal to 0")
     private BigDecimal currentExpenses;
 
     public Budget() {

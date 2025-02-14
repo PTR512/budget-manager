@@ -38,9 +38,20 @@ public class BudgetService {
     @Transactional
     public Budget updateBudget(Long id, YearMonth month, BigDecimal limitAmount, BigDecimal currentExpenses) {
         Budget existingBudget = getBudgetById(id).orElseThrow(() -> new IllegalArgumentException("Budget not found"));
-        existingBudget.setLimitAmount(limitAmount);
-        existingBudget.setCurrentExpenses(currentExpenses);
-        existingBudget.setMonth(month);
+        if(limitAmount != null &&
+                limitAmount.compareTo(BigDecimal.ZERO) >= 0 &&
+                !limitAmount.equals(existingBudget.getLimitAmount())) {
+            existingBudget.setLimitAmount(limitAmount);
+        }
+        if(currentExpenses != null &&
+                currentExpenses.compareTo(BigDecimal.ZERO) >= 0 &&
+                !currentExpenses.equals(existingBudget.getCurrentExpenses())) {
+            existingBudget.setCurrentExpenses(currentExpenses);
+        }
+        if(month != null &&
+                !month.equals(existingBudget.getMonth())) {
+            existingBudget.setMonth(month);
+        }
         return budgetRepository.save(existingBudget);
     }
 
