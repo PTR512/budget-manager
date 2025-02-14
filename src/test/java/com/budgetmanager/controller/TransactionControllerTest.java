@@ -12,8 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,13 +31,13 @@ class TransactionControllerTest {
     void shouldAddTransaction() throws Exception {
         // Given
         String transactionJson = """
-            {
-                "amount": 100.0,
-                "category": "Food",
-                "type": "EXPENSE",
-                "date": "2024-02-12"
-            }
-            """;
+                {
+                    "amount": 100.0,
+                    "category": "Food",
+                    "type": "EXPENSE",
+                    "date": "2024-02-12"
+                }
+                """;
 
         // When & Then
         mockMvc.perform(post("/api/transactions")
