@@ -1,6 +1,7 @@
 package com.budgetmanager.controller;
 
 import com.budgetmanager.model.Transaction;
+import com.budgetmanager.model.TransactionType;
 import com.budgetmanager.repository.TransactionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ class TransactionControllerTest {
                 {
                     "amount": 100.0,
                     "category": "Food",
-                    "type": "EXPENSE",
+                    "type": TransactionType.EXPENSE,
                     "date": "2024-02-12"
                 }
                 """;
@@ -50,7 +51,7 @@ class TransactionControllerTest {
     @Test
     void shouldReturnAllTransactions() throws Exception {
         // Given
-        Transaction transaction = new Transaction(null, BigDecimal.valueOf(50), "Transport", "EXPENSE", LocalDate.now());
+        Transaction transaction = new Transaction(null, BigDecimal.valueOf(50), "Transport", TransactionType.EXPENSE, LocalDate.now());
         transactionRepository.save(transaction);
 
         // When & Then

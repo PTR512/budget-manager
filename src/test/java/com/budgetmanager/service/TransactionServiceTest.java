@@ -1,6 +1,7 @@
 package com.budgetmanager.service;
 
 import com.budgetmanager.model.Transaction;
+import com.budgetmanager.model.TransactionType;
 import com.budgetmanager.repository.TransactionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class TransactionServiceTest {
     @Test
     void getAllTransactions_ShouldReturnTransactionsList() {
         // Given
-        Transaction transaction = new Transaction(1L, BigDecimal.valueOf(100), "Food", "EXPENSE", LocalDate.now());
+        Transaction transaction = new Transaction(1L, BigDecimal.valueOf(100), "Food", TransactionType.EXPENSE, LocalDate.now());
         when(transactionRepository.findAll()).thenReturn(List.of(transaction));
 
         // When
@@ -53,7 +54,7 @@ class TransactionServiceTest {
     @Test
     void addTransaction_ShouldSaveTransaction() {
         // Given
-        Transaction transaction = new Transaction(null, BigDecimal.valueOf(200), "Salary", "INCOME", LocalDate.now());
+        Transaction transaction = new Transaction(null, BigDecimal.valueOf(200), "Salary", TransactionType.INCOME, LocalDate.now());
         when(transactionRepository.save(transaction)).thenReturn(transaction);
 
         // When

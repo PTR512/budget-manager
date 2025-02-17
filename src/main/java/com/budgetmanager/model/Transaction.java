@@ -1,6 +1,9 @@
 package com.budgetmanager.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,15 +14,37 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @NotNull(message = "Amount is required")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than or equal to 0.01")
     private BigDecimal amount;
+
+    @NotBlank(message = "Category cannot be blank")
     private String category;
-    private String type;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Type is required")
+    private TransactionType type;
+
+    @NotNull(message = "Date is required")
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "budget_id", nullable = false)
+    private Budget budget;
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
 
     public Transaction() {
     }
 
-    public Transaction(Long id, BigDecimal amount, String category, String type, LocalDate date) {
+    public Transaction(Long id, BigDecimal amount, String category, TransactionType type, LocalDate date) {
         this.id = id;
         this.amount = amount;
         this.category = category;
@@ -27,7 +52,7 @@ public class Transaction {
         this.date = date;
     }
 
-    public Transaction(BigDecimal amount, String category, String type, LocalDate date) {
+    public Transaction(BigDecimal amount, String category, TransactionType type, LocalDate date) {
         this.amount = amount;
         this.category = category;
         this.type = type;
@@ -58,11 +83,11 @@ public class Transaction {
         this.category = category;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
