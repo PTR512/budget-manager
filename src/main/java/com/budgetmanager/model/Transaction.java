@@ -105,8 +105,9 @@ public class Transaction {
                 "id=" + id +
                 ", amount=" + amount +
                 ", category='" + category + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", date=" + date +
+                ", budget=" + budget +
                 '}';
     }
 }
