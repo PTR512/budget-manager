@@ -64,8 +64,8 @@ public class TransactionController {
      * @return The created transaction.
      */
     @PostMapping
-    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
-        return ResponseEntity.status(201).body(transactionService.addTransaction(transaction));
+    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction, @RequestParam Long budgetId) {
+        return ResponseEntity.status(201).body(transactionService.addTransaction(transaction, budgetId));
     }
 
     @PutMapping("/{id}")

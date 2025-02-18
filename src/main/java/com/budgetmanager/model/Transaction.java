@@ -59,6 +59,23 @@ public class Transaction {
         this.date = date;
     }
 
+    public Transaction(Long id, BigDecimal amount, String category, TransactionType type, LocalDate date, Budget budget) {
+        this.id = id;
+        this.amount = amount;
+        this.category = category;
+        this.type = type;
+        this.date = date;
+        this.budget = budget;
+    }
+
+    public Transaction(BigDecimal amount, String category, TransactionType type, LocalDate date, Budget budget) {
+        this.amount = amount;
+        this.category = category;
+        this.type = type;
+        this.date = date;
+        this.budget = budget;
+    }
+
     public Long getId() {
         return id;
     }

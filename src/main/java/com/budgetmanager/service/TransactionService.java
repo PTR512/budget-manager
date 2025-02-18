@@ -42,11 +42,11 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction addTransaction(Transaction transaction) {
-        Optional<Budget> budget = Optional.ofNullable(budgetRepository.findById(transaction.getBudget().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Budget not found")));
+    public Transaction addTransaction(Transaction transaction, Long budgetId) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new IllegalArgumentException("Budget not found"));
 
-        transaction.setBudget(budget.get());
+        transaction.setBudget(budget);
         return transactionRepository.save(transaction);
     }
 
