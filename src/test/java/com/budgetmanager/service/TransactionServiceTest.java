@@ -119,4 +119,21 @@ class TransactionServiceTest {
         assertDoesNotThrow(() -> transactionService.deleteTransaction(1L));
         verify(transactionRepository, times(1)).deleteById(1L);
     }
+
+    @Test
+    void shouldAllowExpenseToExceedBudget() {
+        // Given: budżet 5000, wydatek 7000 (przekroczy limit)
+        Transaction transaction = new Transaction(1L, BigDecimal.valueOf(7000), "Food", TransactionType.EXPENSE, LocalDate.now(), budget);
+        when(budgetRepository.findById(1L)).thenReturn(Optional.of(budget));
+        when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
+
+        // When
+        Transaction savedTransaction = transactionService.addTransaction(transaction, 1L);
+
+        // Then
+        assertEquals(BigDecimal.valueOf(9000), budget.getCurrentExpenses()); // -4000
+        verify(transactionRepository, times(1)).save(any(Transaction.class));
+        verify(budgetRepository, times(1)).save(budget);
+    }
+
 }

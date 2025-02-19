@@ -47,7 +47,17 @@ public class TransactionService {
                 .orElseThrow(() -> new IllegalArgumentException("Budget not found"));
 
         transaction.setBudget(budget);
+        updateBudgetAfterTransaction(budget, transaction);
         return transactionRepository.save(transaction);
+    }
+
+    private void updateBudgetAfterTransaction(Budget budget, Transaction transaction) {
+        if (transaction.getType() == TransactionType.EXPENSE) {
+            budget.setCurrentExpenses(budget.getCurrentExpenses().add(transaction.getAmount()));
+        } else if (transaction.getType() == TransactionType.INCOME) {
+            budget.setLimitAmount(budget.getLimitAmount().add(transaction.getAmount()));
+        }
+        budgetRepository.save(budget);
     }
 
     public boolean deleteTransaction(Long id) {
