@@ -42,13 +42,17 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
+    @Transactional
     public Transaction addTransaction(Transaction transaction, Long budgetId) {
         Budget budget = budgetRepository.findById(budgetId)
                 .orElseThrow(() -> new IllegalArgumentException("Budget not found"));
 
         transaction.setBudget(budget);
+
+        Transaction savedTransaction = transactionRepository.save(transaction);
+
         updateBudgetAfterTransaction(budget, transaction);
-        return transactionRepository.save(transaction);
+        return savedTransaction;
     }
 
     private void updateBudgetAfterTransaction(Budget budget, Transaction transaction) {
