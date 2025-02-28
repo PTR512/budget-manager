@@ -68,6 +68,16 @@ public class TransactionController {
         return ResponseEntity.status(201).body(transactionService.addTransaction(transaction, budgetId));
     }
 
+    /**
+     * Updates a transaction in the database.
+     *
+     * @param id The ID of the transaction to be updated.
+     * @param amount The amount of the transaction to be updated.
+     * @param category The category of the transaction to be updated.
+     * @param type The type of the transaction to be updated.
+     * @param date The date of the transaction to be updated.
+     * @return The updated transaction.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id,
                                                          @RequestParam(required = false) BigDecimal amount,
